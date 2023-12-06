@@ -324,16 +324,16 @@ class App extends Component {
           <h1 className="statsHead">Statistics - {monthName}</h1>
           <ul className="ulSection">
             <li className="liSection">
-              <p>Total sale</p>
-              <p>{saleList}</p>
+              <p className="statspara ">Total sale</p>
+              <p className="statspara ">{saleList}</p>
             </li>
             <li className="liSection">
-              <p>Total sold items</p>
-              <p>{soldList}</p>
+              <p className="statspara ">Total sold items</p>
+              <p className="statspara ">{soldList}</p>
             </li>
             <li className="liSection">
-              <p>Total not sold items</p>
-              <p>{notSoldList}</p>
+              <p className="statspara" >Total not sold items</p>
+              <p className="statspara" >{notSoldList}</p>
             </li>
           </ul>
         </div>

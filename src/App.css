@@ -109,12 +109,13 @@ td {
   border-bottom: 1px solid lightgreen;
   border-right: 1px solid lightgreen;
   color: black;
-  font-size: 6px;
-}
-.para {
   font-size: 5px;
 }
-p {
+.para {
+  font-size: 3px;
+  
+}
+.statspara {
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -131,7 +132,8 @@ p {
   border-radius: 5px;
   height:15px;
   color:wheat;
-  font-size:8px
+  font-size:8px;
+  padding:5px
 }
 
 .pagesButton{
@@ -279,7 +281,7 @@ p {
   .para {
     font-size: 12px;
   }
-  p {
+  .statspara {
     padding-left: 20px;
     padding-right: 20px;
   }
