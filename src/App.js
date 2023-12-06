@@ -8,10 +8,24 @@ import {
   YAxis,
   Legend,
   ResponsiveContainer,
+  PieChart,Cell,Pie
 } from "recharts";
 import "./App.css";
 
+
+
+
 const defaultTableList=[{
+  id:"empty",
+  title:"empty",
+  price:"empty",
+  descriptions:"empty",
+  category:"empty",
+  soldItem:"empty",
+  dateofsale:"empty",
+  images:""
+ },
+ {
   id:"empty",
   title:"empty",
   price:"empty",
@@ -42,6 +56,7 @@ class App extends Component {
     soldList: "",
     notSoldList: "",
     barList: [],
+    pieList:[]
   };
 
   changeMonth = (event) => {
@@ -50,6 +65,7 @@ class App extends Component {
       this.getDetails();
       this.getSales();
       this.getBar();
+      this.getPie()
     });
   };
   changeSearch = (event) => {
@@ -60,6 +76,7 @@ class App extends Component {
     this.getDetails();
     this.getSales();
     this.getBar();
+    this.getPie();
   }
 
   getSales = async () => {
@@ -104,6 +121,26 @@ class App extends Component {
     console.log(data.data.barChartData);
   };
 
+
+  getPie = async () => {
+    const { month } = this.state;
+
+    const url =  `https://newtransapp.onrender.com/transactions/pieChart/?month=${month}`;
+
+    const options = {
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "https://newtransapp.onrender.com/",
+      },
+    };
+
+    const data = await axios.get(url, options);
+    this.setState({
+      pieList: data.data.pieChartData,
+    });
+    console.log(data.data.pieChartData);
+  };
+
   getDetails = async () => {
     const { month, search, page } = this.state;
 
@@ -132,12 +169,15 @@ class App extends Component {
 
   nextPage = () => {
     const { page } = this.state;
-    if (page === 3) {
-      this.setState({ page: 3 }, this.getDetails);
+    if (page === 2) {
+      this.setState({ page: 2 }, this.getDetails);
     } else {
       this.setState({ page: page + 1 }, this.getDetails);
     }
   };
+
+ 
+
 
   render() {
     const {
@@ -148,8 +188,18 @@ class App extends Component {
       notSoldList,
       barList,
       page,
+      pieList
     } = this.state;
-
+  const  colorandom = () => {
+      let  colors= ["red","orange","white","yellow","green","violet","blue","pink","grey","black","orange","orangered"
+    ]
+      
+     
+       let color =colors[Math.floor(Math.random() * 10)];
+       console.log(color)
+      
+      return color;
+    };
     let monthName;
     switch (month) {
       case "1":
@@ -197,16 +247,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="firstSection">
-          <div className="header">
+             <div className="header">
             <input
               type="search"
               onChange={this.changeSearch}
               placeholder="search transaction"
             />
             <CiSearch onClick={this.clickSearch} />
-          </div>
+              </div>
 
-          <select
+             <select
             className="monthSection"
             onChange={this.changeMonth}
             value={month}
@@ -223,10 +273,10 @@ class App extends Component {
             <option value="10">October</option>
             <option value="11">November</option>
             <option value="12">December</option>
-          </select>
+             </select>
         </div>
 
-        <div className="tableSection">
+    <div className="tableSection">
           <table>
             <tr>
               <th>Id</th>
@@ -258,13 +308,18 @@ class App extends Component {
               </tr>
             )})}
           </table>
+
+
           <div className="buttonSection">
-            <p className="page">Page : 0{page}</p>
+            <p className="page">Page : 0{page}/02</p>
             <button className="pagesButton" onClick={this.previousPage}>Previous page</button>
             <button className="pagesButton" onClick={this.nextPage}>Next page</button>
           </div>
-        </div>
 
+    </div>
+
+
+<div className="secondsection">
         <div className="statsSection">
           <h1 className="statsHead">Statistics - {monthName}</h1>
           <ul className="ulSection">
@@ -282,8 +337,48 @@ class App extends Component {
             </li>
           </ul>
         </div>
-        <div className="barChart">
-          <ResponsiveContainer  width="70%" height={250}>
+
+
+      <div className="pieSection">
+         <ResponsiveContainer  >
+          <h1 className="pieHeading">Pie Chart- {monthName}</h1>
+                <PieChart>
+                  <Pie
+                    cx="50%"
+                    cy="60%"
+                    data={pieList}
+                    startAngle={0}
+                    endAngle={180}
+                    innerRadius="50%"
+                    outerRadius="80%"
+                    dataKey="total_items"
+                  >
+                    {pieList.map((each) => (
+                      <Cell
+                        name={each.category}
+                        fill={colorandom()}
+                        key={each.category}
+                      />
+                    ))}
+                  </Pie>
+                  <Legend
+                    iconType="circle"
+                    layout="vertical"
+                    verticalAlign="middle"
+                    align="left"
+                  />
+                </PieChart>
+         </ResponsiveContainer>
+
+        </div>
+ </div>
+
+
+
+
+        <div className="barchart">
+          <ResponsiveContainer  >
+            <h1 className="pieHeading">  BarChart-{monthName}</h1>
             <BarChart
               data={barList}
               margin={{
@@ -294,18 +389,27 @@ class App extends Component {
                 dataKey="price_range"
                 tick={{
                   stroke: "#ffffff",
-                  strokeWidth: 1,
+                  strokeWidth: 0.5,
+                  fontSize:10
                 }}
+                ariaLabel={{fontSize: 10}}
+
               />
               <YAxis
+              
                 tick={{
                   stroke: "#ffffff",
-                  strokeWidth: 1,
+                  strokeWidth: 0.5,
+                  fontSize:10
+                  
+                  
+                  
                 }}
               />
               <Legend
                 wrapperStyle={{
                   padding: 10,
+                 
                 }}
               />
 
@@ -313,7 +417,8 @@ class App extends Component {
                 dataKey="total_items"
                 name="No.of.Items"
                 fill="wheat"
-                barSize="1%"
+                
+                
               />
             </BarChart>
           </ResponsiveContainer>
