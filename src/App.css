@@ -5,7 +5,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+ 
+ 
 
  
 }
@@ -82,15 +83,16 @@ select {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 90vw;
+  width: 85vw;
   margin-bottom: 50px;
   margin-top: 0px;
+  margin-left:5px
 }
 
 table {
   border-top: 1px solid lightgreen;
   border-left: 1px solid lightgreen;
-  width: 90vw;
+  width: 85vw;
   min-height: 25vh;
   border-radius: 5px;
   background-color: wheat;
@@ -142,13 +144,15 @@ p {
 }
 
 .itemImage{
-  height:100px;
-  width:100px
+  height:50px;
+  width:50px
 }
 .barchart{
   width:100vw;
   height:300px;
   margin-bottom:50px;
+  display: flex;
+  
  
   
 }
@@ -304,10 +308,7 @@ p {
     font-size:15px
   }
   
-  .itemImage{
-    height:100px;
-    width:200px
-  }
+  
   .barchart{
     width:80vw;
     height:300px;

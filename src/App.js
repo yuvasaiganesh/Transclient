@@ -61,7 +61,7 @@ class App extends Component {
 
   changeMonth = (event) => {
     event.preventDefault();
-    this.setState({ month: event.target.value }, () => {
+    this.setState({ month: event.target.value,page:1}, () => {
       this.getDetails();
       this.getSales();
       this.getBar();
@@ -191,8 +191,8 @@ class App extends Component {
       pieList
     } = this.state;
   const  colorandom = () => {
-      let  colors= ["red","orange","white","yellow","green","violet","blue","pink","grey","black","orange","orangered"
-    ]
+      let  colors= ["red","orange","white","yellow","green","violet","blue","pink","grey","black","orange","orangered",
+    "brown","cyan","crimson","darlgoldenrod","darkmagenta","deeppink","gold","lightcoral","khaki"]
       
      
        let color =colors[Math.floor(Math.random() * 10)];
